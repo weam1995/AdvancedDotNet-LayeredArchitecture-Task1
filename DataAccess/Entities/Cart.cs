@@ -8,7 +8,7 @@ namespace CartServiceApp.DataAccess.Entities
 {
     public class Cart
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; } // Guid instead of int
         public List<CartItem> Items { get; set; } = [];
     }
 }

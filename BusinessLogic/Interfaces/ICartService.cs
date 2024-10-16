@@ -9,8 +9,8 @@ namespace CartServiceApp.BusinessLogic.Interfaces
 {
     public interface ICartService
     {
-        List<CartItem> GetCartItems(int cartId);
+        List<CartItem> GetCartItems(Guid cartId);
         void AddCartItem(Cart cart, CartItem cartItem);
-        bool DeleteCartItem(int cartId, CartItem cartItem);
+        bool DeleteCartItem(Guid cartId, CartItem cartItem);
     }
 }

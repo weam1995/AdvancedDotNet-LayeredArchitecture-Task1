@@ -10,7 +10,7 @@ namespace CartServiceApp.Tests
     {
         private LiteDatabase _db;
 
-        private CartService _cartService;
+        private CartService _cartService; // use ICartService
         public CartServiceTests()
         {
             _db = new LiteDatabase(new MemoryStream());
@@ -20,14 +20,14 @@ namespace CartServiceApp.Tests
         public void AddItemToCart_ShouldAddSuccessfully()
         {
             //Arrange
-            Cart cart = new Cart() { Id = 1, Items = [] };
-            CartItem cartItem = new CartItem() { Id = 1, Name = "Iphone 16 ProMax", Price = 5000, Quantity = 1 };
+            Cart cart = new Cart() { Id = new Guid(), Items = [] };
+            CartItem cartItem = new CartItem() { Id = 1, Name = "Iphone 16 ProMax", Price = new DataAccess.ValueObjects.Money(500.9m,CatalogService.Domain.Enums.CurrencyCode.PLN), Quantity = 1 };
             //Act
             _cartService.AddCartItem(cart, cartItem);
             var cartItems = _cartService.GetCartItems(cart.Id);
             //Assert
             Assert.Single(cartItems);
-            Assert.Equal(5000, cartItems[0].Price);
+            Assert.Equal(500.9m, cartItems[0].Price.Value);
 
         }
     }

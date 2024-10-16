@@ -16,7 +16,7 @@ namespace CartServiceApp.DataAccess.Entities
         public string Name { get; set; } = string.Empty;
         public Image? Image { get; set; }
         [Required]
-        public decimal Price { get; set; }
+        public Money Price { get; set; }
         public int Quantity { get; set; }
     }
 }
