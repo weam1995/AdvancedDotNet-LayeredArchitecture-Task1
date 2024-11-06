@@ -25,38 +25,52 @@ namespace CartServiceApp.BusinessLogic.Services
             _liteDb = liteDbContext.Database;
             _cartCollection = _liteDb.GetCollection<Cart>(CartDataCollectionName);
         }
-        public void AddCartItem(Cart cart, CartItem cartItem)
+        public Cart GetCart(Guid id)
         {
-            var existingCart = _cartCollection.FindOne(x => x.Id == cart.Id);
+            return _cartCollection.FindById(id) ?? new Cart();
+        }
+        public void AddCartItem(Guid cartId, CartItem cartItem)
+        {
+            var existingCart = _cartCollection.FindOne(x => x.Id == cartId);
             
-            if(existingCart != null)
+            if(existingCart is not null)
             {
                 var existingCartItem = existingCart.Items.FirstOrDefault(x => x.Id == cartItem.Id);
                 if (existingCartItem != null)
-                    existingCartItem.Quantity = existingCartItem.Quantity + cartItem.Quantity;
+                    existingCartItem.Quantity += cartItem.Quantity;
                 else
                     existingCart.Items.Add(cartItem);
                 _cartCollection.Update(existingCart);
             }
             else
             {
-                Guid cartId = _cartCollection.Insert(cart);
-                var addedCart = _cartCollection.FindById(cartId);
-                
-                addedCart.Items.Add(cartItem);
-                _cartCollection.Update(addedCart);
+                var newCart = new Cart() { Id = cartId, Items = [cartItem] };
+                _cartCollection.Insert(newCart);
             };
         }
 
-        public bool DeleteCartItem(Guid cartId, CartItem cartItem)
+        public bool DeleteCartItem(Guid cartId, int cartItemId)
         {
             var cart = _cartCollection.FindById(cartId);
-            return cart == null ? throw new ArgumentNullException($"No Cart exists with id {cartId}") : cart.Items.Remove(cartItem);
+            if(cart != null)
+            {
+                var cartItem = cart.Items.Where(x=>x.Id == cartItemId).FirstOrDefault();
+                if (cartItem is null) return false;
+                else
+                {
+                   return cart.Items.Remove(cartItem);
+                }
+            }
+            return false;
         }
 
-        public List<CartItem> GetCartItems(Guid cartId)
+        public List<CartItem>? GetCartItems(Guid cartId)
         {
-            return _cartCollection.FindById(cartId).Items.ToList();
+            var cart = _cartCollection.Find(x => x.Id == cartId).FirstOrDefault();
+            if (cart != null)
+                return cart.Items;
+            else
+                return null;
         }
     }
 }

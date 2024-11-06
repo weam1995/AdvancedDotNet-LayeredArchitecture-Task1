@@ -13,7 +13,7 @@ namespace CartServiceApp.DataAccess.Entities
         [Required]
         public int Id { get; set; }
         [Required]
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; set; }
         public Image? Image { get; set; }
         [Required]
         public Money Price { get; set; }
