@@ -1,18 +1,20 @@
-﻿using Asp.Versioning;
+﻿
+using Asp.Versioning;
 using CartServiceApp.BusinessLogic.Dtos;
 using CartServiceApp.BusinessLogic.Interfaces;
 using CartServiceApp.DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.Metadata.Ecma335;
 
-namespace CartServiceApp.Controllers
+namespace CartServiceApp.Controllers.V2
 {
+    [ApiVersion("2.0")]
     [ApiController]
     [Route("/api/v{version:apiVersion}/[controller]")]
     [Produces("application/json")]
     [Consumes("application/json")]
-    [ApiVersion("2.0")]
-    public class CartsControllerV2(ICartService cartService) : ControllerBase
+
+    public class CartsController(ICartService cartService) : ControllerBase
     {
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(List<CartItem>), StatusCodes.Status200OK)]
@@ -41,10 +43,10 @@ namespace CartServiceApp.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult DeleteCartItem(string cartId, int cartItemId)
         {
-            bool result =  cartService.DeleteCartItem(new Guid(cartId), cartItemId);
+            bool result = cartService.DeleteCartItem(new Guid(cartId), cartItemId);
             if (!result) return NotFound();
             else return Ok();
-                
+
         }
     }
 }

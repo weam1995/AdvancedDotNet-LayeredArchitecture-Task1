@@ -4,15 +4,15 @@ using CartServiceApp.BusinessLogic.Interfaces;
 using CartServiceApp.DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.Metadata.Ecma335;
-
 namespace CartServiceApp.Controllers.V1
 {
+    [ApiVersion("1.0")]
     [ApiController]
     [Route("/api/v{version:apiVersion}/[controller]")]
     [Produces("application/json")]
     [Consumes("application/json")]
-    [ApiVersion("1.0")]
-    public class CartsControllerV1(ICartService cartService) : ControllerBase
+
+    public class CartsController(ICartService cartService) : ControllerBase
     {
         /// <summary>
         /// Returns Cart ID along with the related list of cart items
@@ -23,6 +23,7 @@ namespace CartServiceApp.Controllers.V1
         /// <response code = "404">A cart was not found for the given Id</response>
         
         [HttpGet("{id}")]
+        //[MapToApiVersion("1.0")]
         [ProducesResponseType(typeof(Cart), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetCartInfo(string id)
@@ -40,6 +41,7 @@ namespace CartServiceApp.Controllers.V1
         
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        //[MapToApiVersion("1.0")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult AddCartItem([FromBody] AddCartItemRequestDto request)
         {    if (!ModelState.IsValid) return BadRequest();
@@ -48,6 +50,7 @@ namespace CartServiceApp.Controllers.V1
         }
 
         [HttpDelete("{cartId}/{cartItemId}")]
+        //[MapToApiVersion("1.0")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult DeleteCartItem(string cartId, int cartItemId)

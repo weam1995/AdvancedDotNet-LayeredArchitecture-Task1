@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CatalogService.Domain.Enums
+namespace CartServiceApp.DataAccess.Enums
 {
     public enum CurrencyCode
     {

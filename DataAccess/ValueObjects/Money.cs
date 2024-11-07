@@ -1,5 +1,5 @@
 ﻿using Ardalis.GuardClauses;
-using CatalogService.Domain.Enums;
+using CartServiceApp.DataAccess.Enums;
 using System;
 
 namespace CartServiceApp.DataAccess.ValueObjects
