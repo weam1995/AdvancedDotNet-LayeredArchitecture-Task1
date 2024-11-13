@@ -58,7 +58,6 @@ namespace CartServiceApp.Controllers.V1
             bool result = cartService.DeleteCartItem(new Guid(cartId), cartItemId);
             if (!result) return NotFound();
             else return Ok();
-
         }
     }
 }

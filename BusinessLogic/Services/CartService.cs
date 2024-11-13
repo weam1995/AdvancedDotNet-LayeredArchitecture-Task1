@@ -99,7 +99,8 @@ namespace CartServiceApp.BusinessLogic.Services
                 if (cartItem is null) return false;
                 else
                 {
-                   return cart.Items.Remove(cartItem);
+                 return cart.Items.Remove(cartItem);
+           
                 }
             }
             return false;
