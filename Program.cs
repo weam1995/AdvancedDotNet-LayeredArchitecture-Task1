@@ -12,6 +12,7 @@ using Microsoft.OpenApi.Models;
 using Asp.Versioning;
 using CartServiceApp.Extension;
 using Microsoft.Extensions.Options;
+using CartServiceApp.HostedServcies;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -21,6 +22,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 builder.Services.AddSwaggerGen();
+
 // Add API Versioning
 builder.Services.AddApiVersioning(options =>
 {
@@ -37,6 +39,7 @@ builder.Services.AddApiVersioning(options =>
 
 builder.Services.AddSingleton<ILiteDbContext, LiteDbContext>();
 builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddHostedService<ProductChangeKafkaConsumerService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

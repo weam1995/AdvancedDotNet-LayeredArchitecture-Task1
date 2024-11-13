@@ -1,4 +1,5 @@
 ﻿using CartServiceApp.DataAccess.Entities;
+using KafkaDemo.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,8 @@ namespace CartServiceApp.BusinessLogic.Interfaces
     {
         Cart GetCart(Guid id);
         List<CartItem> GetCartItems(Guid cartId);
-        void AddCartItem(Guid cartId, CartItem cartItem);
+        void AddCartItem(Guid cartId, CartItem cart);
         bool DeleteCartItem(Guid cartId, int cartItemId);
+        void UpdateCartsItems(ProductChangedEvent productChangedEvent);
     }
 }

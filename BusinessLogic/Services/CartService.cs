@@ -1,6 +1,7 @@
 ﻿using CartServiceApp.BusinessLogic.Interfaces;
 using CartServiceApp.DataAccess;
 using CartServiceApp.DataAccess.Entities;
+using KafkaDemo.Events;
 using LiteDB;
 using System;
 using System.Collections.Generic;
@@ -47,6 +48,46 @@ namespace CartServiceApp.BusinessLogic.Services
                 var newCart = new Cart() { Id = cartId, Items = [cartItem] };
                 _cartCollection.Insert(newCart);
             };
+        }
+        public void UpdateCartItem(Guid cartId, ProductChangedEvent productChangedEvent)
+        {
+            var existingCart = _cartCollection.FindOne(x => x.Id == cartId);
+            if(existingCart is not null)
+            {
+                var existingCartItem = existingCart.Items.FirstOrDefault(x => x.Id == productChangedEvent.Id);
+                if(existingCartItem != null)
+                {
+                    var newCartItem = GetUpdatedCartItem(existingCartItem, productChangedEvent);
+                    if (existingCartItem != null)
+                    {
+                        existingCartItem.Name = newCartItem.Name;
+                        existingCartItem.Image = newCartItem.Image;
+                        existingCartItem.Price = newCartItem.Price;
+                        _cartCollection.Update(existingCart);
+                    }
+                }
+            }
+        }
+
+        public void UpdateCartsItems(ProductChangedEvent productChangedEvent)
+        {
+            var carts = _cartCollection.FindAll();
+            foreach(var cart in carts) { 
+                UpdateCartItem(cart.Id, productChangedEvent);
+            }
+        }
+
+        private CartItem GetUpdatedCartItem(CartItem existingCartItem, ProductChangedEvent productChangedEvent)
+        {
+            var newCartItem = new CartItem()
+            {
+                Id = productChangedEvent.Id,
+                Name = productChangedEvent.Name ?? existingCartItem.Name,
+                Image = new DataAccess.ValueObjects.Image() { URL = productChangedEvent.ImageURL ?? existingCartItem.Image.URL, Text = existingCartItem.Image?.Text ?? string.Empty },
+                Price = new CartServiceApp.DataAccess.ValueObjects.Money(productChangedEvent.Price.Value, (CartServiceApp.DataAccess.Enums.CurrencyCode)productChangedEvent.Price.Currency),
+                Quantity = existingCartItem.Quantity
+            };
+            return newCartItem;
         }
 
         public bool DeleteCartItem(Guid cartId, int cartItemId)
