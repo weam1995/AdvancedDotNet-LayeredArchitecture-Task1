@@ -25,8 +25,8 @@ namespace CartServiceApp.HostedServcies
                     var productChangedEvent = JsonConvert.DeserializeObject<ProductChangedEvent>(consumeResult.Message.Value);
                     if (productChangedEvent is not null)
                     {
-                        
                         cartService.UpdateCartsItems(productChangedEvent);
+                        consumer.StoreOffset(consumeResult);
                     }
                 }
             }

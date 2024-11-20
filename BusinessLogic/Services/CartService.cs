@@ -71,7 +71,7 @@ namespace CartServiceApp.BusinessLogic.Services
 
         public void UpdateCartsItems(ProductChangedEvent productChangedEvent)
         {
-            var carts = _cartCollection.FindAll();
+            var carts = _cartCollection.FindAll().Where(x => x.Items.Any(y => y.Id == productChangedEvent.Id));
             foreach(var cart in carts) { 
                 UpdateCartItem(cart.Id, productChangedEvent);
             }
