@@ -1,11 +1,8 @@
-﻿using CartServiceApp.BusinessLogic.Dtos;
-using CartServiceApp.BusinessLogic.Interfaces;
-using CartServiceApp.Controllers;
+﻿using CartServiceApp.BusinessLogic.Interfaces;
 using CartServiceApp.Controllers.V1;
 using CartServiceApp.DataAccess.Entities;
 using CartServiceApp.DataAccess.Enums;
 using CartServiceApp.DataAccess.ValueObjects;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Shouldly;
@@ -37,7 +34,7 @@ namespace CartServiceApp.Tests.Controllers
             {
                 Id = 2,
                 Name = "Product B",
-                Image = new Image { URL = "http://productBImage.com", Text = "Product B image"},
+                Image = new Image { URL = "http://productBImage.com", Text = "Product B image" },
                 Price = new Money(29.99M, CurrencyCode.USD),
                 Quantity = 1
             },

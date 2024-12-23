@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CartServiceApp.DataAccess.Entities
+﻿namespace CartServiceApp.DataAccess.Entities
 {
     public class Cart
     {
@@ -19,6 +13,11 @@ namespace CartServiceApp.DataAccess.Entities
                        this.Items == other.Items;
             }
             return false;
+        }
+
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,8 +1,5 @@
 ﻿using CartServiceApp.BusinessLogic.Services;
-using CartServiceApp.DataAccess.Entities;
 using LiteDB;
-using Microsoft.AspNetCore.Mvc.ApplicationParts;
-using Xunit;
 
 namespace CartServiceApp.Tests
 {

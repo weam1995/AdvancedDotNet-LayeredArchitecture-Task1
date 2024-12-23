@@ -3,11 +3,6 @@ using CartServiceApp.DataAccess;
 using CartServiceApp.DataAccess.Entities;
 using KafkaDemo.Events;
 using LiteDB;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CartServiceApp.BusinessLogic.Services
 {
@@ -33,8 +28,8 @@ namespace CartServiceApp.BusinessLogic.Services
         public void AddCartItem(Guid cartId, CartItem cartItem)
         {
             var existingCart = _cartCollection.FindOne(x => x.Id == cartId);
-            
-            if(existingCart is not null)
+
+            if (existingCart is not null)
             {
                 var existingCartItem = existingCart.Items.FirstOrDefault(x => x.Id == cartItem.Id);
                 if (existingCartItem != null)
@@ -52,10 +47,10 @@ namespace CartServiceApp.BusinessLogic.Services
         public void UpdateCartItem(Guid cartId, ProductChangedEvent productChangedEvent)
         {
             var existingCart = _cartCollection.FindOne(x => x.Id == cartId);
-            if(existingCart is not null)
+            if (existingCart is not null)
             {
                 var existingCartItem = existingCart.Items.FirstOrDefault(x => x.Id == productChangedEvent.Id);
-                if(existingCartItem != null)
+                if (existingCartItem != null)
                 {
                     var newCartItem = GetUpdatedCartItem(existingCartItem, productChangedEvent);
                     if (existingCartItem != null)
@@ -72,7 +67,8 @@ namespace CartServiceApp.BusinessLogic.Services
         public void UpdateCartsItems(ProductChangedEvent productChangedEvent)
         {
             var carts = _cartCollection.FindAll().Where(x => x.Items.Any(y => y.Id == productChangedEvent.Id));
-            foreach(var cart in carts) { 
+            foreach (var cart in carts)
+            {
                 UpdateCartItem(cart.Id, productChangedEvent);
             }
         }
@@ -93,14 +89,14 @@ namespace CartServiceApp.BusinessLogic.Services
         public bool DeleteCartItem(Guid cartId, int cartItemId)
         {
             var cart = _cartCollection.FindById(cartId);
-            if(cart != null)
+            if (cart != null)
             {
-                var cartItem = cart.Items.Where(x=>x.Id == cartItemId).FirstOrDefault();
+                var cartItem = cart.Items.Where(x => x.Id == cartItemId).FirstOrDefault();
                 if (cartItem is null) return false;
                 else
                 {
-                 return cart.Items.Remove(cartItem);
-           
+                    return cart.Items.Remove(cartItem);
+
                 }
             }
             return false;

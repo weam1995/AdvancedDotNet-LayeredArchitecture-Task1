@@ -3,7 +3,6 @@ using CartServiceApp.BusinessLogic.Dtos;
 using CartServiceApp.BusinessLogic.Interfaces;
 using CartServiceApp.DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection.Metadata.Ecma335;
 namespace CartServiceApp.Controllers.V1
 {
     [ApiVersion("1.0")]
@@ -21,7 +20,7 @@ namespace CartServiceApp.Controllers.V1
         /// <returns>A Cart</returns>
         /// <response code = "200">A cart</response>
         /// <response code = "404">A cart was not found for the given Id</response>
-        
+
         [HttpGet("{id}")]
         //[MapToApiVersion("1.0")]
         [ProducesResponseType(typeof(Cart), StatusCodes.Status200OK)]
@@ -38,13 +37,14 @@ namespace CartServiceApp.Controllers.V1
         /// <param name="request"></param>
         /// <response code = "200"> if the cart and item are added successfully </response>
         /// <response code = "400"> if invalid request object </response>
-        
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         //[MapToApiVersion("1.0")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult AddCartItem([FromBody] AddCartItemRequestDto request)
-        {    if (!ModelState.IsValid) return BadRequest();
+        {
+            if (!ModelState.IsValid) return BadRequest();
             cartService.AddCartItem(new Guid(request.CartId), request.CartItem);
             return Ok();
         }

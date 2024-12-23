@@ -4,7 +4,6 @@ using CartServiceApp.BusinessLogic.Dtos;
 using CartServiceApp.BusinessLogic.Interfaces;
 using CartServiceApp.DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection.Metadata.Ecma335;
 
 namespace CartServiceApp.Controllers.V2
 {

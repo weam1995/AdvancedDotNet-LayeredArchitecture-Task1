@@ -1,11 +1,5 @@
 ﻿using CartServiceApp.DataAccess.ValueObjects;
-using KafkaDemo.Events;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CartServiceApp.DataAccess.Entities
 {
@@ -20,6 +14,6 @@ namespace CartServiceApp.DataAccess.Entities
         public Money Price { get; set; }
         public int Quantity { get; set; }
 
-       
+
     }
 }

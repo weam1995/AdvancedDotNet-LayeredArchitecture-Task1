@@ -1,18 +1,16 @@
 ﻿
 using CartServiceApp.BusinessLogic.Interfaces;
-using CartServiceApp.DataAccess.Entities;
 using Confluent.Kafka;
 using KafkaClient.Consumer;
 using KafkaDemo.Events;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace CartServiceApp.HostedServcies
 {
     public class ProductChangeKafkaConsumerService(IServiceProvider serviceProvider) : BackgroundService
     {
-        private readonly IConsumer<string,string> consumer = new KafkaConsumer("productChange-topic").Consumer;
-      
+        private readonly IConsumer<string, string> consumer = new KafkaConsumer("productChange-topic").Consumer;
+
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             await Task.Yield();
@@ -30,7 +28,7 @@ namespace CartServiceApp.HostedServcies
                     }
                 }
             }
-                
+
         }
     }
 }

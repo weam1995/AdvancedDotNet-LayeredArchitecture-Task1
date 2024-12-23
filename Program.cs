@@ -1,18 +1,12 @@
 
+using Asp.Versioning;
 using CartServiceApp.BusinessLogic.Interfaces;
 using CartServiceApp.BusinessLogic.Services;
 using CartServiceApp.DataAccess;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.Extensions.Configuration;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Reflection;
-using Asp.Versioning.ApiExplorer;
-using Microsoft.OpenApi.Models;
-using Asp.Versioning;
 using CartServiceApp.Extension;
-using Microsoft.Extensions.Options;
 using CartServiceApp.HostedServcies;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
